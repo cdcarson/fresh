@@ -1,6 +1,6 @@
-import { ComponentType } from "preact";
-import { ConnInfo, router, ServeInit } from "./deps.ts";
-import { InnerRenderFunction, RenderContext } from "./render.tsx";
+import { ComponentType } from 'preact';
+import { ConnInfo, router, ServeInit } from './deps.ts';
+import { InnerRenderFunction, RenderContext } from './render.tsx';
 
 // --- APPLICATION CONFIGURATION ---
 
@@ -12,7 +12,7 @@ export interface FreshOptions {
 
 export type RenderFunction = (
   ctx: RenderContext,
-  render: InnerRenderFunction,
+  render: InnerRenderFunction
 ) => void | Promise<void>;
 
 /// --- ROUTES ---
@@ -61,17 +61,19 @@ export interface RouteConfig {
   csp?: boolean;
 }
 
-export interface HandlerContext<Data = unknown, State = Record<string, unknown>>
-  extends ConnInfo {
+export type HandlerContext<
+  Data = unknown,
+  State = Record<string, unknown>
+> = ConnInfo & {
   params: Record<string, string>;
   render: (data?: Data) => Response | Promise<Response>;
   state: State;
-}
+};
 
 // deno-lint-ignore no-explicit-any
 export type Handler<T = any, State = Record<string, unknown>> = (
   req: Request,
-  ctx: HandlerContext<T, State>,
+  ctx: HandlerContext<T, State>
 ) => Response | Promise<Response>;
 
 // deno-lint-ignore no-explicit-any
@@ -125,7 +127,7 @@ export interface UnknownHandlerContext<State = Record<string, unknown>>
 
 export type UnknownHandler = (
   req: Request,
-  ctx: UnknownHandlerContext,
+  ctx: UnknownHandlerContext
 ) => Response | Promise<Response>;
 
 export interface UnknownPageModule {
@@ -165,7 +167,7 @@ export interface ErrorHandlerContext<State = Record<string, unknown>>
 }
 export type ErrorHandler = (
   req: Request,
-  ctx: ErrorHandlerContext,
+  ctx: ErrorHandlerContext
 ) => Response | Promise<Response>;
 
 export interface ErrorPageModule {
@@ -206,14 +208,14 @@ export interface MiddlewareRoute extends Middleware {
 export interface MiddlewareModule<State = any> {
   handler(
     req: Request,
-    ctx: MiddlewareHandlerContext<State>,
+    ctx: MiddlewareHandlerContext<State>
   ): Response | Promise<Response>;
 }
 
 export interface Middleware<State = Record<string, unknown>> {
   handler(
     req: Request,
-    ctx: MiddlewareHandlerContext<State>,
+    ctx: MiddlewareHandlerContext<State>
   ): Response | Promise<Response>;
 }
 
